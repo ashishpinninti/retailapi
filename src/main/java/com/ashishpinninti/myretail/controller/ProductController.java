@@ -21,34 +21,34 @@ import com.ashishpinninti.myretail.service.ProductService;
 public class ProductController {
 
 	@Autowired
-	private ProductService userService;
+	private ProductService productService;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
 	public Product getProduct(@PathVariable("id") String id) {
-		return userService.getProduct(id);
+		return productService.getProduct(id);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
 	public List<Product> getAllProducts(
 			@RequestParam(value = "page", required = false) Integer page,
 			@RequestParam(value = "size", required = false) Integer size) {
-		return userService.getAllProducts(page, size);
+		return productService.getAllProducts(page, size);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON)
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
 	public Product addProduct(@RequestBody Product product) {
-		return userService.addProduct(product);
+		return productService.addProduct(product);
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON, consumes = MediaType.APPLICATION_JSON)
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
 	public Product updateProduct(@PathVariable("id") String id,
 			@RequestBody Product productUpdate) {
-		return userService.updateProduct(id, productUpdate);
+		return productService.updateProduct(id, productUpdate);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public String deleteProduct(@PathVariable("id") String id) {
-		return userService.deleteProduct(id);
+		return productService.deleteProduct(id);
 	}
 
 }

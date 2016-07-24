@@ -14,8 +14,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -33,13 +31,13 @@ public class ProductServiceTest {
 
 	@Mock
 	private ProductRepository productRepository;
-	
+
 	@InjectMocks
 	private ProductService productService = new ProductServiceImpl();
 
-	private Product product,productUpdate, newProduct;
+	private Product product, productUpdate, newProduct;
 
-	protected void assertSame(Product product1, Product product2) {
+	public void assertSame(Product product1, Product product2) {
 		if (product1 == product2) {
 			return;
 		}
@@ -53,19 +51,32 @@ public class ProductServiceTest {
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
+		product = getBasicProduct();
+		productUpdate = getBasicProductUpdate();
+		newProduct = getBasicNewProduct();
+	}
 
+	public Product getBasicProduct() {
 		CurrentPrice current_price = new CurrentPrice("7", "INR");
-		product = new Product();
+		Product product = new Product();
 		product.setId(new BigInteger("13860428"));
 		product.setCurrent_price(current_price);
+		return product;
+	}
 
+	public Product getBasicProductUpdate() {
 		CurrentPrice current_price1 = new CurrentPrice("8", "USD");
-		productUpdate = new Product();
+		Product productUpdate = new Product();
 		productUpdate.setId(new BigInteger("23456532"));
 		productUpdate.setCurrent_price(current_price1);
-		
-		newProduct = new Product();
-		newProduct.setCurrent_price(current_price);
+		return productUpdate;
+	}
+
+	public Product getBasicNewProduct() {
+		CurrentPrice current_price2 = new CurrentPrice("9", "INR");
+		Product newProduct = new Product();
+		newProduct.setCurrent_price(current_price2);
+		return newProduct;
 	}
 
 	@Test
@@ -97,7 +108,7 @@ public class ProductServiceTest {
 		assertThat(productIds.contains(allProducts.get(1).getId())).as(
 				"Product should be present in the returned user list").isTrue();
 	}
-	
+
 	@Test
 	public void addNewProduct() {
 		when(productRepository.insert(newProduct)).thenReturn(newProduct);
@@ -105,14 +116,14 @@ public class ProductServiceTest {
 		assertThat(actual).isNotNull();
 		verify(productRepository).insert(newProduct);
 	}
-	
+
 	@Test(expected = ProductAlreadyExistException.class)
 	public void addAlreadyPresentProduct() {
 		String productId = product.getId().toString();
 		when(productRepository.findOne(productId)).thenReturn(product);
 		productService.addProduct(product);
 	}
-	
+
 	@Test
 	public void addNewProductWithGivenId() {
 		String productId = product.getId().toString();
@@ -120,7 +131,7 @@ public class ProductServiceTest {
 		productService.addProduct(product);
 		verify(productRepository).insert(product);
 	}
-	
+
 	@Test(expected = ExternalAPICallFailedException.class)
 	public void addProductWithIdNotInExternalAPI() {
 		String productId = productUpdate.getId().toString();
