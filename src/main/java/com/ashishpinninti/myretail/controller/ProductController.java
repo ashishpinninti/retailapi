@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ashishpinninti.myretail.entity.Product;
-import com.ashishpinninti.myretail.service.UserService;
+import com.ashishpinninti.myretail.service.ProductService;
 
 @RestController
 @RequestMapping(value = "/products/v1")
@@ -21,7 +21,7 @@ import com.ashishpinninti.myretail.service.UserService;
 public class ProductController {
 
 	@Autowired
-	private UserService userService;
+	private ProductService userService;
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
 	public Product getProduct(@PathVariable("id") String id) {
