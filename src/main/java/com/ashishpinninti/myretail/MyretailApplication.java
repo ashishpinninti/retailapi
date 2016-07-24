@@ -23,6 +23,9 @@ public class MyretailApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		
+		// initialize seed in another method in another class
+		
 		repository.deleteAll();
 
 		CurrentPrice c1 = new CurrentPrice("1", "USD");
