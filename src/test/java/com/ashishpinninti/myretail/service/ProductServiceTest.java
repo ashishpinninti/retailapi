@@ -93,6 +93,13 @@ public class ProductServiceTest {
 		when(productRepository.findOne(productId)).thenReturn(null);
 		productService.getProduct(productId);
 	}
+	
+	@Test(expected = ExternalAPICallFailedException.class)
+	public void getProductWithIdNotInExternalAPI() {
+		String productId = productUpdate.getId().toString();
+		when(productRepository.findOne(productId)).thenReturn(productUpdate);
+		productService.getProduct(productId);
+	}
 
 	@Test
 	public void getAllProductsNoPaging() {
@@ -132,12 +139,12 @@ public class ProductServiceTest {
 		verify(productRepository).insert(product);
 	}
 
-	@Test(expected = ExternalAPICallFailedException.class)
-	public void addProductWithIdNotInExternalAPI() {
-		String productId = productUpdate.getId().toString();
-		when(productRepository.findOne(productId)).thenReturn(null);
-		productService.addProduct(productUpdate);
-	}
+//	@Test(expected = ExternalAPICallFailedException.class)
+//	public void addProductWithIdNotInExternalAPI() {
+//		String productId = productUpdate.getId().toString();
+//		when(productRepository.findOne(productId)).thenReturn(null);
+//		productService.addProduct(productUpdate);
+//	}
 
 	@Test
 	public void updateProduct() {

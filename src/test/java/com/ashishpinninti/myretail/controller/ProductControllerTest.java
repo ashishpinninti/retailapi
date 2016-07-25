@@ -164,7 +164,6 @@ public class ProductControllerTest {
 				.andExpect(
 						jsonPath("$['current_price']['currency_code']",
 								is("USD")));
-		System.out.println("fi " + product);
 		verify(productService).updateProduct(eq(productId), any(Product.class));
 	}
 

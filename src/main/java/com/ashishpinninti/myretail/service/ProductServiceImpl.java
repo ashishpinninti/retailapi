@@ -69,8 +69,9 @@ public class ProductServiceImpl implements ProductService {
 				throw new ProductAlreadyExistException("Product with id=" + id
 						+ " already exists!");
 			}
-			String productNameFromTargetAPI = getProductNameFromTargetAPI(id);
-			product.setName(productNameFromTargetAPI);
+			// String productNameFromTargetAPI =
+			// getProductNameFromTargetAPI(id);
+			// product.setName(productNameFromTargetAPI);
 		}
 		Product insert = productRepository.insert(product);
 		return insert;
