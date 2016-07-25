@@ -7,22 +7,29 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 
+/**
+ * This is Mongo configuration class.
+ * 
+ * @author apinninti
+ *
+ */
 @Configuration
 @EnableMongoRepositories(basePackages = "com.ashishpinninti.myretail.repository")
 public class MongoConfig extends AbstractMongoConfiguration {
- 
-    @Override
-    protected String getDatabaseName() {
-        return "target";
-    }
- 
-    @Override
-    public Mongo mongo() throws Exception {
-        return new MongoClient("127.0.0.1", 27017);
-    }
- 
-    @Override
-    protected String getMappingBasePackage() {
-        return "org.ashishpinninti.myretail";
-    }
+
+	@Override
+	protected String getDatabaseName() {
+		return MyretailConstants.DB_NAME;
+	}
+
+	@Override
+	public Mongo mongo() throws Exception {
+		return new MongoClient(MyretailConstants.LOCALHOST_IP,
+				MyretailConstants.MONGO_PORT);
+	}
+
+	@Override
+	protected String getMappingBasePackage() {
+		return "org.ashishpinninti.myretail";
+	}
 }

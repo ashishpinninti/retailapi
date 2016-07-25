@@ -1,5 +1,11 @@
 package com.ashishpinninti.myretail.entity;
 
+/**
+ * Model POJO representing Current Price
+ * 
+ * @author apinninti
+ *
+ */
 public class CurrentPrice {
 
 	private String value;

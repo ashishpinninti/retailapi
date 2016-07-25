@@ -3,12 +3,18 @@ package com.ashishpinninti.myretail.entity;
 import java.math.BigInteger;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 
+/**
+ * Model POJO representing Product Document in Mongo DB.
+ * 
+ * @author apinninti
+ *
+ */
 public class Product {
 	@Id
 	private BigInteger id;
-	// @Transient: Not sure whether to get the name from Target API or local DB
+	// @Transient: Not sure whether to get the name from Target API and store in
+	// local DB for performance. The trade-off is stale data.
 	private String name;
 	private CurrentPrice current_price;
 

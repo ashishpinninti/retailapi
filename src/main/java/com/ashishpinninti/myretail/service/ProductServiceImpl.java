@@ -24,12 +24,28 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+/**
+ * Product service call for performing major business operations and error
+ * handling.
+ * 
+ * @author apinninti
+ *
+ */
 @Service
 public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
 
+	/**
+	 * Fetches Product for a given id. Performs external Target API call for
+	 * fetching product name.
+	 * 
+	 * @param id
+	 * @return Product from DB
+	 * @throws ProductNotFoundException
+	 *             and ExternalAPICallFailedException
+	 */
 	@Override
 	public Product getProduct(String id) {
 		Product product = productRepository.findOne(id);
@@ -44,6 +60,14 @@ public class ProductServiceImpl implements ProductService {
 		return product;
 	}
 
+	/**
+	 * Fetches all the products when page and size are not provided. Fetches
+	 * products in paginated manner when both page and size are provided.
+	 * 
+	 * @param page
+	 * @param size
+	 * @return All the Products from DB
+	 */
 	@Override
 	public List<Product> getAllProducts(Integer page, Integer size) {
 		Pageable pageableRequest = null;
@@ -60,6 +84,14 @@ public class ProductServiceImpl implements ProductService {
 		return products;
 	}
 
+	/**
+	 * Saves the given product to DB.
+	 * 
+	 * @param product
+	 *            to be saved to DB
+	 * @return product saved in the DB
+	 * @throws ProductAlreadyExistException
+	 */
 	@Override
 	public Product addProduct(Product product) {
 		BigInteger id = product.getId();
@@ -77,6 +109,15 @@ public class ProductServiceImpl implements ProductService {
 		return insert;
 	}
 
+	/**
+	 * Takes the given product details and updates it to DB.
+	 * 
+	 * @param id
+	 * @param Product
+	 *            details that are to be updated.
+	 * @return Updated product
+	 * @throws ProductNotFoundException
+	 */
 	@Override
 	public Product updateProduct(String id, Product productUpdate) {
 		Product product = productRepository.findOne(id);
@@ -89,6 +130,13 @@ public class ProductServiceImpl implements ProductService {
 		return product;
 	}
 
+	/**
+	 * Deletes the given product from DB.
+	 * 
+	 * @param id
+	 * @return delete confirmation message
+	 * @throws ProductNotFoundException
+	 */
 	@Override
 	public String deleteProduct(String id) {
 		Product product = productRepository.findOne(id);
@@ -100,6 +148,14 @@ public class ProductServiceImpl implements ProductService {
 		return "deleted product with id: " + id;
 	}
 
+	/**
+	 * Performs external call to Target API and fetches product name for a given
+	 * ID.
+	 * 
+	 * @param productId
+	 * @return productName
+	 * @throws ExternalAPICallFailedException
+	 */
 	private String getProductNameFromTargetAPI(BigInteger productId) {
 		String productName = null;
 		try {
@@ -110,7 +166,6 @@ public class ProductServiceImpl implements ProductService {
 							+ "?fields=descriptions&id_type=TCIN&key=43cJWpLjH8Z8oR18KdrZDBKAgLLQKJjz");
 			Builder request = resource.request();
 			request.accept(MediaType.APPLICATION_JSON);
-			// Inject
 			JsonParser jsonParser = new JsonParser();
 			JsonObject getResponse = jsonParser
 					.parse(request.get(String.class)).getAsJsonObject();

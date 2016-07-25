@@ -39,6 +39,12 @@ import com.ashishpinninti.myretail.entity.Product;
 import com.ashishpinninti.myretail.service.ProductService;
 import com.google.gson.Gson;
 
+/**
+ * Unit Tests for ProductController
+ * 
+ * @author apinninti
+ *
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { TestConfig.class })
 @WebAppConfiguration

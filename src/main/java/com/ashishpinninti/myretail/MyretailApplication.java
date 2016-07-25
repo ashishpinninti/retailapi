@@ -11,6 +11,12 @@ import com.ashishpinninti.myretail.entity.CurrentPrice;
 import com.ashishpinninti.myretail.entity.Product;
 import com.ashishpinninti.myretail.repository.ProductRepository;
 
+/**
+ * The is starting point of this application.
+ * 
+ * @author apinninti
+ *
+ */
 @SpringBootApplication
 public class MyretailApplication implements CommandLineRunner {
 
@@ -26,6 +32,9 @@ public class MyretailApplication implements CommandLineRunner {
 		seedData();
 	}
 
+	/**
+	 * This method is used to provide initial seed data when the app starts.
+	 */
 	public void seedData() {
 		repository.deleteAll();
 

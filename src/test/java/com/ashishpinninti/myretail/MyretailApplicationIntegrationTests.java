@@ -26,9 +26,15 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+/**
+ * This class performs integration or end-to-end tests.
+ * 
+ * @author apinninti
+ *
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { TestConfig.class })
-public class MyretailApplicationTests {
+public class MyretailApplicationIntegrationTests {
 
 	public Product getBasicProduct() {
 		CurrentPrice current_price = new CurrentPrice("7", "INR");
@@ -67,7 +73,6 @@ public class MyretailApplicationTests {
 							+ "?fields=descriptions&id_type=TCIN&key=43cJWpLjH8Z8oR18KdrZDBKAgLLQKJjz");
 			Builder request = resource.request();
 			request.accept(MediaType.APPLICATION_JSON);
-			// Inject
 			JsonParser jsonParser = new JsonParser();
 			JsonObject getResponse = jsonParser
 					.parse(request.get(String.class)).getAsJsonObject();
